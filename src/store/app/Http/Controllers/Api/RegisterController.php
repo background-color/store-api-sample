@@ -16,7 +16,6 @@ class RegisterController extends Controller
 {
     public function register(Request $request)
     {
-        /** @var Illuminate\Validation\Validator $validator */
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|email',

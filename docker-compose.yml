@@ -37,5 +37,18 @@ services:
     volumes:
       - mysql-volume:/var/lib/mysql
 
+  db-testing:
+    build:
+      context: .
+      dockerfile: ./docker/db-testing/Dockerfile
+    ports:
+      - 33060:3306
+    environment:
+      MYSQL_DATABASE: test
+      MYSQL_USER: store_user
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+      TZ: 'Asia/Tokyo'
+
 volumes:
   mysql-volume:
