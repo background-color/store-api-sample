@@ -2,10 +2,8 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\RegisterController;
-use App\Http\Controllers\Api\LoginController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Api\ItemController;
+use App\Http\Controllers\ItemController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,13 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // ユーザー登録
-Route::post('/register', [RegisterController::class, 'register']);
+Route::post('/register', [AuthController::class, 'register']);
 
 // ログイン
-Route::post('/login', [LoginController::class, 'login']);
-
-Route::middleware('auth:sanctum')->get('/me', [AuthController::class, 'me']);
-
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group( function () {
     Route::post('/item', [ItemController::class, 'createItem']);

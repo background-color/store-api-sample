@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,10 +11,10 @@ use \Symfony\Component\HttpFoundation\Response;
 
 class ItemController extends Controller
 {
-    public function getAllItems()
+    public function getAllItems(): \Illuminate\Http\JsonResponse
     {
         $items = Item::whereNull('accepted_at')->get(['id', 'name', 'point', 'user_id', 'description']);
-        return response()->json($items, Response::HTTP_OK);
+        return response()->json(['items' => $items], Response::HTTP_OK);
     }
 
     public function createItem(Request $request)
@@ -35,7 +35,7 @@ class ItemController extends Controller
             'description' => $request->description,
         ]);
 
-        return response()->json('item created', Response::HTTP_CREATED);
+        return response()->json('item created', Response::HTTP_OK);
     }
 
     public function getItem($id)
@@ -47,7 +47,7 @@ class ItemController extends Controller
         if ($item->isEmpty()){
             return response()->json('item not found', Response::HTTP_NOT_FOUND);
         }
-        return response()->json($item, Response::HTTP_OK);
+        return response()->json(['items' => $item], Response::HTTP_OK);
     }
 
     public function updateItem(Request $request, $id)
