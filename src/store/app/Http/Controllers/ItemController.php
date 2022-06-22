@@ -11,7 +11,7 @@ use \Symfony\Component\HttpFoundation\Response;
 
 class ItemController extends Controller
 {
-    public function getAllItems(): \Illuminate\Http\JsonResponse
+    public function getAllItems()
     {
         $items = Item::whereNull('accepted_at')->get(['id', 'name', 'point', 'user_id', 'description']);
         return response()->json(['items' => $items], Response::HTTP_OK);
@@ -64,7 +64,7 @@ class ItemController extends Controller
           if (item::where('id', $id)->where('user_id', $request->user()->id)
                                     ->whereNull('accepted_at')
                                     ->doesntExist()) {
-              return response()->json('item not found', Response::HTTP_NOT_FOUND);
+              return response()->json(errmsg('Item not found.'), Response::HTTP_NOT_FOUND);
           }
 
           $item = Item::find($id);
@@ -73,7 +73,7 @@ class ItemController extends Controller
           $item->description = $request->description;
           $item->save();
 
-          return response()->json('item updated', Response::HTTP_OK);
+          return response()->json('Item updated', Response::HTTP_OK);
     }
 
 

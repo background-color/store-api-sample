@@ -39,7 +39,7 @@ class ItemTest extends TestCase
 
     protected function loginUser()
     {
-        $this->actingAs($this->user);
+        $this->actingAs($this->user, 'sanctum');
     }
 
     /**
@@ -50,14 +50,14 @@ class ItemTest extends TestCase
         $this->loginUser();
 
         // 成功
-        $response = $this->post('/api/item', $this->item1);
+        $response = $this->post('/api/items', $this->item1);
         $response->assertOk();
 
-        $response = $this->post('/api/item', $this->item2);
+        $response = $this->post('/api/items', $this->item2);
         $response->assertOk();
 
         // Validate
-        $response = $this->post('/api/item', [
+        $response = $this->post('/api/items', [
             'name' => 'test',
             'point' => 'test',
         ]);
@@ -130,7 +130,7 @@ class ItemTest extends TestCase
     /**
      * @test
      */
-    public function 受注後は変更不可()
+    public function 購入済みは変更不可()
     {
         $this->loginUser();
 
@@ -139,12 +139,12 @@ class ItemTest extends TestCase
             'accepted_at' => '2202-01-01',
         ]);
 
-        // 更新不可
+        // 変更不可
         $item = Item::first();
         $response = $this->put('/api/items/'.$item->id, $this->item3);
         $response->assertStatus(404);
 
-        // 更新不可
+        // 変更不可
         $response = $this->delete('/api/items/'.$item->id);
         $response->assertStatus(404);
     }
