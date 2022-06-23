@@ -33,6 +33,7 @@ class OrderController extends Controller
             return response()->json(errmsg('Item not found.'), Response::HTTP_NOT_FOUND);
         }
 
+        // 購入者
         $buyer = User::Where([
             ['id', '=', $request->user()->id],
             ['point', '>=', $item->point],
@@ -44,15 +45,22 @@ class OrderController extends Controller
         $order = DB::transaction(function () use($item, $buyer)
         {
             $point = $item->point;
-            Item::where('id', $item->id)->lockForUpdate()
+            Item::where('id', $item->id)
+                ->whereNull('accepted_at')
+                ->lockForUpdate()
                 ->update(['accepted_at' => now()]);
 
-            // buyer user
-            User::where('id', $buyer->id)->lockForUpdate()
+            // 購入者
+            User::where([
+                ['id', $buyer->id],
+                ['point', '>=', $point],
+            ])
+                ->lockForUpdate()
                 ->decrement('point', $point);
 
-            // seller user
-            User::where('id', $item->user_id)->lockForUpdate()
+            // 出品者
+            User::where('id', $item->user_id)
+                ->lockForUpdate()
                 ->increment('point', $point);
 
             $order = new Order;
@@ -64,15 +72,6 @@ class OrderController extends Controller
 
             return $order;
         });
-
-        /*
-        Order::create([
-            'item_id' =>  1,
-            'seller_id' => $request->user()->id,
-            'buyer_id' => 1,
-            'accepted_at' => now(),
-        ]);
-        */
 
         return response()->json([
             'message' => 'order created',

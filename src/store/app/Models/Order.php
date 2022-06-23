@@ -26,7 +26,6 @@ class Order extends Model
         return $this->belongsTo(User::class, 'buyer_id');
     }
 
-
     public static function find_relation($user_id, $order_id = null): \Illuminate\Support\Collection
     {
         return Order::with([
