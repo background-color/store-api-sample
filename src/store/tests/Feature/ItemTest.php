@@ -67,7 +67,7 @@ class ItemTest extends TestCase
         // 全件取得
         $response = $this->get('/api/items');
         $response->assertOk()
-                ->assertJsonCount(2, 'items')   // item2件
+                ->assertJsonCount(2, 'data')   // item2件
                 ->assertJsonFragment($this->item1)
                 ->assertJsonFragment($this->item2);
 

@@ -29,7 +29,7 @@ class Order extends Model
     public static function find_relation($user_id, $order_id = null): \Illuminate\Support\Collection
     {
         return Order::with([
-            'item:id,name,point',
+            'item',
             'seller:id,name',
             'buyer:id,name'
         ])->where(function($query) use($user_id) {

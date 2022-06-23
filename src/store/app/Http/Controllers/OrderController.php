@@ -6,18 +6,46 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use \Symfony\Component\HttpFoundation\Response;
+use App\Http\Resources\OrderResource;
 use App\Models\User;
 use App\Models\Item;
 use App\Models\Order;
 
 class OrderController extends Controller
 {
-    public function getAllOrder(Request $request)
+    /**
+     * GET 自分の売買履歴を返すAPI
+     *
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @authenticated
+     * @group Order
+     * @apiResourceModel 200 App\Http\Resources\OrderResource
+     */
+    public function index(Request $request)
     {
         $orders = Order::find_relation($request->user()->id);
-        return response()->json(['orders' => $orders], Response::HTTP_OK);
+        return OrderResource::collection($orders);
     }
 
+    /**
+     * POST 商品を購入するAPI
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @authenticated
+     * @group Order
+     * @bodyParam item_id string  購入する商品のID
+     * @response 200 {
+     *     "message": "Your order has been completed.",
+     *     "orders": {
+     *         "id": 18,
+     *         "accepted_at": "2022-06-23 13:05:06"
+     *     }
+     * }
+     * }
+     */
     public function createOrder(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -73,9 +101,12 @@ class OrderController extends Controller
             return $order;
         });
 
+        /////////////////////////
+        // TODO 戻り地に item_id などが入ってない。リソースの設定で入れていないから。with関数で取得し直すか？
+        ///////////////////////// 
         return response()->json([
-            'message' => 'order created',
-            'orders' => $order,
+            'message' => 'Your order has been completed.',
+            'orders' => new OrderResource($order),
             ], Response::HTTP_OK);
     }
 

@@ -1,0 +1,427 @@
+openapi: 3.0.3
+info:
+  title: Laravel
+  description: ''
+  version: 1.0.0
+servers:
+  -
+    url: 'http://localhost:8080'
+paths:
+  /api/user:
+    get:
+      summary: ''
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Endpoints
+      security: []
+  /api/register:
+    post:
+      summary: ユーザ登録
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: ''
+                  example: et
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: isaiah.swaniawski@example.net
+                password:
+                  type: string
+                  description: ''
+                  example: et
+              required:
+                - name
+                - email
+                - password
+      security: []
+  /api/login:
+    post:
+      summary: ログイン
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses: {  }
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: 'Must be a valid email address.'
+                  example: mazie92@example.net
+                password:
+                  type: string
+                  description: ''
+                  example: et
+              required:
+                - email
+                - password
+      security: []
+  /api/items:
+    get:
+      summary: 'GET 商品一覧を返すAPI'
+      description: ''
+      parameters:
+        -
+          in: query
+          name: is_sale
+          description: 1=販売商品のみ表示
+          example: '1'
+          required: false
+          schema:
+            type: string
+            description: 1=販売商品のみ表示
+            example: '1'
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n\"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"登山靴\",\n            \"point\": 100,\n            \"description\": \"テキストテキスト\",\n            \"user_id\": 1,   // 登録者ID\n            \"accepted_at\": null  // 注文日\n        }\n    ]\n}"
+      tags:
+        - Item
+      security: []
+    post:
+      summary: 'POST 商品を登録するAPI'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n    \"message\": \"Your item has been successfully created.\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"登山靴\",\n        \"point\": 1000,\n        \"description\": \"防水加工です\",\n        \"user_id\": 1,  // 登録者ID\n        \"accepted_at\": null  // 受注日\n    }\n}"
+      tags:
+        - Item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 商品名
+                  example: 登山靴
+                point:
+                  type: integer
+                  description: 価格（ポイント）
+                  example: 1000
+                description:
+                  type: string
+                  description: 説明文
+                  example: 防水加工です
+              required:
+                - name
+                - point
+  '/api/items/{id}':
+    get:
+      summary: 'GET 指定の商品を返すAPI'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n\"data\": {\n            \"id\": 1,\n            \"name\": \"登山靴\",\n            \"point\": 100,\n            \"description\": \"テキストテキスト\",\n            \"user_id\": 1,   // 登録者ID\n            \"accepted_at\": null  // 注文日\n        }\n}"
+      tags:
+        - Item
+      security: []
+    put:
+      summary: 'PUT 商品を更新するAPI'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n    \"message\": \"Your item has been successfully updated.\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"シェラカップ\",\n        \"point\": 800,\n        \"description\": \"ステンレスです\",\n        \"user_id\": 1,  // 登録者ID\n        \"accepted_at\": null  // 受注日\n    }\n}"
+      tags:
+        - Item
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 商品名
+                  example: シェラカップ
+                point:
+                  type: integer
+                  description: 価格（ポイント）
+                  example: 800
+                description:
+                  type: string
+                  description: 説明文
+                  example: ステンレスです
+              required:
+                - name
+                - point
+    delete:
+      summary: 'DELETE 商品を削除するAPI'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n    \"message\": \"Your item has been successfully updated.\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"シェラカップ\",\n        \"point\": 800,\n        \"description\": \"ステンレスです\",\n        \"user_id\": 1,  // 登録者ID\n        \"accepted_at\": null  // 受注日\n    }\n}"
+      tags:
+        - Item
+    parameters:
+      -
+        in: path
+        name: id
+        description: 'Optional parameter. 購入する商品のID'
+        required: true
+        schema:
+          type: integer
+        examples:
+          omitted:
+            summary: 'When the value is omitted'
+            value: ''
+          present:
+            summary: 'When the value is present'
+            value: 1
+  /api/orders:
+    post:
+      summary: 'POST 商品を購入するAPI'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n    \"message\": \"Your order has been completed.\",\n    \"orders\": {\n        \"id\": 18,\n        \"accepted_at\": \"2022-06-23 13:05:06\"\n    }\n}\n}"
+      tags:
+        - Order
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                item_id:
+                  type: string
+                  description: 購入する商品のID
+                  example: quibusdam
+    get:
+      summary: 'GET 自分の売買履歴を返すAPI'
+      description: ''
+      parameters:
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        401:
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: Unauthenticated.
+                properties:
+                  message:
+                    type: string
+                    example: Unauthenticated.
+      tags:
+        - Order
+tags:
+  -
+    name: Endpoints
+    description: ''
+  -
+    name: Item
+    description: ''
+  -
+    name: Order
+    description: ''

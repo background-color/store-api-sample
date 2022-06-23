@@ -17,9 +17,6 @@ use App\Http\Controllers\OrderController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 // ユーザー登録
 Route::post('/register', [AuthController::class, 'register']);
@@ -28,16 +25,25 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth:sanctum')->group( function () {
-    // 商品
-    Route::post('/items', [ItemController::class, 'createItem']);
-    Route::put('/items/{id}', [ItemController::class, 'updateItem']);
-    Route::delete('/items/{id}',[ItemController::class, 'deleteItem']);
+    // 商品登録
+    Route::post('/items', [ItemController::class, 'create']);
+    // 商品修正
+    Route::put('/items/{id}', [ItemController::class, 'update']);
+    // 商品削除
+    Route::delete('/items/{id}',[ItemController::class, 'destroy']);
 
-    // 注文
+    // 購入
     Route::post('/orders', [OrderController::class, 'createOrder']);
-    Route::get('/orders', [OrderController::class, 'getAllOrder']);
+    // 売買履歴
+    Route::get('/orders', [OrderController::class, 'index']);
 });
 
 // 商品表示
-Route::get('/items', [ItemController::class, 'getAllItems']);
-Route::get('/items/{id}', [ItemController::class, 'getItem']);
+Route::get('/items', [ItemController::class, 'index']);
+// 商品表示（単品）
+Route::get('/items/{id}', [ItemController::class, 'show']);
+
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});

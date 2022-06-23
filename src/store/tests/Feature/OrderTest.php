@@ -124,9 +124,9 @@ class OrderTest extends TestCase
         // 購入履歴が取得できる
         $this->get('/api/orders/')
             ->assertOk()
-            ->assertJsonCount(2, 'orders')
+            ->assertJsonCount(2, 'data')
             ->assertJson([
-                'orders' => [
+                'data' => [
                     [
                         'item_id' => $item1->id,
                         'buyer_id' => $this->user->id,
@@ -144,9 +144,9 @@ class OrderTest extends TestCase
         $this->actingAs($seller1, 'sanctum');
         $res = $this->get('/api/orders/')
             ->assertOk()
-            ->assertJsonCount(1, 'orders')
+            ->assertJsonCount(1, 'data')
             ->assertJson([
-                'orders' => [
+                'data' => [
                     [
                         'item_id' => $item1->id,
                         'buyer_id' => $this->user->id,

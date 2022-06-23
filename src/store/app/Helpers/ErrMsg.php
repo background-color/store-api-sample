@@ -3,6 +3,10 @@ if (! function_exists('errmsg'))
 {
     function errmsg($mes)
     {
-        return ['message' => $mes];
+        return [
+            'error' => [
+                'message' => $mes
+            ]
+        ];
     }
 }
