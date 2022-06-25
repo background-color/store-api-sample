@@ -80,9 +80,11 @@ class OrderController extends Controller
             return $this->getErrorResponse($validator->messages(), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $item = Item::Where('id', $request->item_id)->whereNull('accepted_at')->first();
+        $item = Item::Where('id', $request->item_id)
+                ->where('status', Item::STATUS_SALE)
+                ->first();
         if (!$item){
-            return $this->getErrorResponse('Item not found.');
+            return $this->getErrorResponse('Not for sale Item.');
         }
 
         // 購入者
@@ -98,9 +100,9 @@ class OrderController extends Controller
         {
             $point = $item->point;
             Item::where('id', $item->id)
-                ->whereNull('accepted_at')
+                ->where('status', Item::STATUS_SALE)
                 ->lockForUpdate()
-                ->update(['accepted_at' => now()]);
+                ->update(['status' => Item::STATUS_SOLDOUT]);
 
             // 購入者
             User::where([

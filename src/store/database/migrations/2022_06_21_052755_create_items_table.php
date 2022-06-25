@@ -18,12 +18,12 @@ class CreateItemsTable extends Migration
             $table->string('name', 255);
             $table->unsignedBigInteger('user_id')->comment('投稿者');
             $table->mediumInteger('point');
-            $table->date('accepted_at')->nullable()->comment('受付日');
+            $table->unsignedInteger('status')->nullable()->default(1)->comment('ステータス');
             $table->string('description', 255)->nullable();
             $table->timestamps();
 
             // index
-            $table->index('accepted_at');
+            $table->index('status');
 
             //外部キー
             $table->foreign('user_id')->references('id')->on('users');

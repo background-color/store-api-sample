@@ -32,7 +32,7 @@ class ItemController extends Controller
      *             "point": 100,
      *             "description": "テキストテキスト",
      *             "user_id": 1,   // 登録者ID
-     *             "accepted_at": null  // 注文日
+     *             "status": "sale"  // ステータス
      *         }
      *     ]
      * }
@@ -43,7 +43,7 @@ class ItemController extends Controller
 
         $items = new Item();
         if ($request->is_sale) {
-            $items = $items->whereNull('accepted_at');
+            $items = $items->where('status', Item::STATUS_SALE);
             $appends['is_sale'] = '1';
         }
 
@@ -74,7 +74,7 @@ class ItemController extends Controller
      *             "point": 100,
      *             "description": "テキストテキスト",
      *             "user_id": 1,   // 登録者ID
-     *             "accepted_at": null  // 注文日
+     *             "status": "sale"  // ステータス
      *         }
      * }
      * @apiResourceModel 200 App\Http\Resources\ItemResource
@@ -108,7 +108,7 @@ class ItemController extends Controller
      *         "point": 1000,
      *         "description": "防水加工です",
      *         "user_id": 1,  // 登録者ID
-     *         "accepted_at": null  // 受注日
+     *         "status": "sale"  // ステータス
      *     }
      * }
      */
@@ -157,7 +157,7 @@ class ItemController extends Controller
      *         "point": 800,
      *         "description": "ステンレスです",
      *         "user_id": 1,  // 登録者ID
-     *         "accepted_at": null  // 受注日
+     *         "status": "sale"  // ステータス
      *     }
      * }
      */
@@ -177,7 +177,7 @@ class ItemController extends Controller
 
           if (item::where('id', $id)
             ->where('user_id', $request->user()->id)
-            ->whereNull('accepted_at')
+            ->where('status', Item::STATUS_SALE)
             ->doesntExist()) {
                 return $this->getErrorResponse('Item not found.');
           }
@@ -212,7 +212,7 @@ class ItemController extends Controller
      *         "point": 800,
      *         "description": "ステンレスです",
      *         "user_id": 1,  // 登録者ID
-     *         "accepted_at": null  // 受注日
+     *         "status": "sale"  // ステータス
      *     }
      * }
      */
@@ -220,7 +220,7 @@ class ItemController extends Controller
     {
         if (item::where('id', $id)
             ->where('user_id', $request->user()->id)
-            ->whereNull('accepted_at')
+            ->where('status', Item::STATUS_SALE)
             ->doesntExist()) {
                 return $this->getErrorResponse('Item not found.');
         }

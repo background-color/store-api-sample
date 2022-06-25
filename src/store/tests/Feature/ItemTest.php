@@ -136,7 +136,7 @@ class ItemTest extends TestCase
 
         Item::factory()->create([
             'user_id' => $this->user->id,
-            'accepted_at' => '2202-01-01',
+            'status' => Item::STATUS_SOLDOUT,
         ]);
 
         // 変更不可

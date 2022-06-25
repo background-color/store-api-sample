@@ -54,7 +54,7 @@ class OrderTest extends TestCase
         $this->assertDatabaseCount('orders', 1);
 
         // 商品が購入済みになっている
-        $this->assertNotNull(Item::find($item->id)->accepted_at);
+        $this->assertEquals(Item::find($item->id)->status, Item::STATUS_SOLDOUT);
 
         // 購入者のポイントが減っている
         $this->assertDatabaseHas('users', [
@@ -79,7 +79,7 @@ class OrderTest extends TestCase
         $seller = User::factory()->create();
         Item::factory()->create([
             'user_id' => $seller->id,
-            'accepted_at' => now(),
+            'status' => Item::STATUS_SOLDOUT,
         ]);
 
         $item = Item::first();

@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Models\Item;
 
 class ItemResource extends JsonResource
 {
@@ -23,7 +24,7 @@ class ItemResource extends JsonResource
             'point' => $this->point,
             'description' => $this->description,
             'user_id' => $this->user_id,
-            'accepted_at' => $this->accepted_at,
+            'status' => Item::status_name($this->status),
         ];
     }
 
