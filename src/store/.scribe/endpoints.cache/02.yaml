@@ -23,7 +23,7 @@ endpoints:
         name: item_id
         description: 購入する商品のID
         required: false
-        example: 4
+        example: 8
         type: integer
         custom: []
     responses:

@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel",
-        "_postman_id": "e5ad658b-ca4e-419b-932b-daadf395eb3c",
+        "_postman_id": "b4f724b0-c122-43a4-9dee-a9229d6b6e4f",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -338,7 +338,7 @@
                         ],
                         "body": {
                             "mode": "raw",
-                            "raw": "{\"item_id\":4}"
+                            "raw": "{\"item_id\":8}"
                         },
                         "description": ""
                     },

@@ -450,7 +450,7 @@ paths:
                 item_id:
                   type: integer
                   description: 購入する商品のID
-                  example: 4
+                  example: 8
     get:
       summary: 'GET 自分の売買履歴を返すAPI'
       description: ''

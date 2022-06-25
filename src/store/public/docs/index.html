@@ -144,7 +144,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 <pre><code class="language-yaml">http://localhost:8080/</code></pre>
 
         <h1 id="authenticating-requests">Authenticating requests</h1>
-<p>To authenticate requests, include an <strong><code>Authorization</code></strong> header with the value <strong><code>"Bearer {YOUR_AUTH_KEY}"</code></strong>.</p>
+<p>Authenticate requests to this API's endpoints by sending an <strong><code>Authorization</code></strong> header with the value <strong><code>"Bearer {YOUR_AUTH_KEY}"</code></strong>.</p>
 <p>All authenticated endpoints are marked with a <code>requires authentication</code> badge in the documentation below.</p>
 <p>You can retrieve your token by visiting your dashboard and clicking <b>Generate API token</b>.</p>
 
@@ -1095,7 +1095,7 @@ fetch(url, {
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"item_id\": 4
+    \"item_id\": 8
 }"
 </code></pre></div>
 
@@ -1112,7 +1112,7 @@ const headers = {
 };
 
 let body = {
-    "item_id": 4
+    "item_id": 8
 };
 
 fetch(url, {
@@ -1206,7 +1206,7 @@ fetch(url, {
                 <input type="number"
                name="item_id"
                data-endpoint="POSTapi-orders"
-               value="4"
+               value="8"
                data-component="body" hidden>
     <br>
 <p>購入する商品のID</p>

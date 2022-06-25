@@ -235,8 +235,7 @@ return [
          * This will NOT be included in the generated documentation.
          * If this value is empty, Scribe will use a random value.
          */
-        //'use_value' => env('SCRIBE_AUTH_KEY'),
-        'use_value' => '19|lIHSr8yK0ji4CLMrSBfeuUGKzBh8TriQ22fBy7Wv',
+        'use_value' => env('SCRIBE_AUTH_KEY'),
 
         /*
          * Placeholder your users will see for the auth parameter in the example requests.
