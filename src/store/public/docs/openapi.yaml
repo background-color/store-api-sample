@@ -132,22 +132,22 @@ paths:
           in: query
           name: is_sale
           description: 1=販売商品のみ表示
-          example: '1'
+          example: 1
           required: false
           schema:
-            type: string
+            type: integer
             description: 1=販売商品のみ表示
-            example: '1'
+            example: 1
         -
           in: query
           name: per_page
           description: 1ページの表示件数
-          example: '10'
+          example: 10
           required: false
           schema:
-            type: string
+            type: integer
             description: 1ページの表示件数
-            example: '10'
+            example: 10
         -
           in: header
           name: Content-Type
@@ -177,6 +177,13 @@ paths:
       summary: 'POST 商品を登録するAPI'
       description: ''
       parameters:
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
         -
           in: header
           name: Content-Type
@@ -259,6 +266,13 @@ paths:
       parameters:
         -
           in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
           name: Content-Type
           description: ''
           example: application/json
@@ -309,6 +323,13 @@ paths:
       parameters:
         -
           in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
           name: Content-Type
           description: ''
           example: application/json
@@ -353,6 +374,13 @@ paths:
       parameters:
         -
           in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
+        -
+          in: header
           name: Content-Type
           description: ''
           example: application/json
@@ -369,10 +397,47 @@ paths:
         200:
           description: ''
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-                example: "{\n    \"message\": \"Your order has been completed.\",\n    \"orders\": {\n        \"id\": 18,\n        \"accepted_at\": \"2022-06-23 13:05:06\"\n    }\n}\n}"
+                type: object
+                example:
+                  message: 'Your order has been completed.'
+                  data:
+                    item:
+                      id: 1
+                      name: 登山靴
+                      point: 100
+                      description: テキストテキスト
+                      user_id: 1
+                      status: 'sold out'
+                    seller:
+                      id: 1
+                      name: 山田花子
+                    buyer:
+                      id: 2
+                      name: 鈴木太郎
+                    accepted_at: '2022-06-25 17:22:57'
+                properties:
+                  message:
+                    type: string
+                    example: 'Your order has been completed.'
+                  data:
+                    type: object
+                    example:
+                      item:
+                        id: 1
+                        name: 登山靴
+                        point: 100
+                        description: テキストテキスト
+                        user_id: 1
+                        status: 'sold out'
+                      seller:
+                        id: 1
+                        name: 山田花子
+                      buyer:
+                        id: 2
+                        name: 鈴木太郎
+                      accepted_at: '2022-06-25 17:22:57'
       tags:
         - Order
       requestBody:
@@ -383,9 +448,9 @@ paths:
               type: object
               properties:
                 item_id:
-                  type: string
+                  type: integer
                   description: 購入する商品のID
-                  example: saepe
+                  example: 4
     get:
       summary: 'GET 自分の売買履歴を返すAPI'
       description: ''
@@ -394,12 +459,19 @@ paths:
           in: query
           name: per_page
           description: 1ページの表示件数
-          example: '10'
+          example: 10
           required: false
           schema:
-            type: string
+            type: integer
             description: 1ページの表示件数
-            example: '10'
+            example: 10
+        -
+          in: header
+          name: Authorization
+          description: ''
+          example: 'Bearer {YOUR_AUTH_KEY}'
+          schema:
+            type: string
         -
           in: header
           name: Content-Type
@@ -415,18 +487,108 @@ paths:
           schema:
             type: string
       responses:
-        401:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
+                  data:
+                    -
+                      id: 39
+                      item:
+                        id: 18
+                        name: テスト商品
+                        point: 111
+                        description: 詳細文言
+                        user_id: 1
+                        status: 'sold out'
+                      seller:
+                        id: 1
+                        name: 山田花子
+                      buyer:
+                        id: 15
+                        name: 佐藤次郎
+                      accepted_at: '2022-06-25 17:22:57'
+                  links:
+                    first: 'http://localhost/api/orders?page=1'
+                    last: 'http://localhost/api/orders?page=1'
+                    prev: null
+                    next: null
+                  meta:
+                    current_page: 1
+                    from: 1
+                    last_page: 1
+                    links:
+                      -
+                        url: null
+                        label: '&laquo; Previous'
+                        active: false
+                      -
+                        url: 'http://localhost/api/orders?page=1'
+                        label: '1'
+                        active: true
+                      -
+                        url: null
+                        label: 'Next &raquo;'
+                        active: false
+                    path: 'http://localhost/api/orders'
+                    per_page: 10
+                    to: 1
+                    total: 1
                 properties:
-                  message:
-                    type: string
-                    example: Unauthenticated.
+                  data:
+                    type: array
+                    example:
+                      -
+                        id: 39
+                        item:
+                          id: 18
+                          name: テスト商品
+                          point: 111
+                          description: 詳細文言
+                          user_id: 1
+                          status: 'sold out'
+                        seller:
+                          id: 1
+                          name: 山田花子
+                        buyer:
+                          id: 15
+                          name: 佐藤次郎
+                        accepted_at: '2022-06-25 17:22:57'
+                    items:
+                      type: object
+                  links:
+                    type: object
+                    example:
+                      first: 'http://localhost/api/orders?page=1'
+                      last: 'http://localhost/api/orders?page=1'
+                      prev: null
+                      next: null
+                  meta:
+                    type: object
+                    example:
+                      current_page: 1
+                      from: 1
+                      last_page: 1
+                      links:
+                        -
+                          url: null
+                          label: '&laquo; Previous'
+                          active: false
+                        -
+                          url: 'http://localhost/api/orders?page=1'
+                          label: '1'
+                          active: true
+                        -
+                          url: null
+                          label: 'Next &raquo;'
+                          active: false
+                      path: 'http://localhost/api/orders'
+                      per_page: 10
+                      to: 1
+                      total: 1
       tags:
         - Order
 tags:
@@ -439,3 +601,12 @@ tags:
   -
     name: Order
     description: ''
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: ''
+security:
+  -
+    default: []

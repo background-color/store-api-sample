@@ -211,7 +211,7 @@ return [
         /*
          * Set this to true if any endpoints in your API use authentication.
          */
-        'enabled' => false,
+        'enabled' => true,
 
         /*
          * Set this to true if your API should be authenticated by default. If so, you must also set `enabled` (above) to true.
@@ -228,14 +228,15 @@ return [
         /*
          * The name of the auth parameter (eg token, key, apiKey) or header (eg Authorization, Api-Key).
          */
-        'name' => 'key',
+        'name' => 'Authorization',
 
         /*
          * The value of the parameter to be used by Scribe to authenticate response calls.
          * This will NOT be included in the generated documentation.
          * If this value is empty, Scribe will use a random value.
          */
-        'use_value' => env('SCRIBE_AUTH_KEY'),
+        //'use_value' => env('SCRIBE_AUTH_KEY'),
+        'use_value' => '19|lIHSr8yK0ji4CLMrSBfeuUGKzBh8TriQ22fBy7Wv',
 
         /*
          * Placeholder your users will see for the auth parameter in the example requests.

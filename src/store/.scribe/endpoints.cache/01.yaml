@@ -21,15 +21,15 @@ endpoints:
         name: is_sale
         description: 1=販売商品のみ表示
         required: false
-        example: '1'
-        type: string
+        example: 1
+        type: integer
         custom: []
       per_page:
         name: per_page
         description: 1ページの表示件数
         required: false
-        example: '10'
-        type: string
+        example: 10
+        type: integer
         custom: []
     bodyParameters: []
     responses:
@@ -100,6 +100,7 @@ endpoints:
       authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
@@ -154,6 +155,7 @@ endpoints:
       authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:
@@ -215,6 +217,7 @@ endpoints:
       authenticated: true
       custom: []
     headers:
+      Authorization: 'Bearer {YOUR_AUTH_KEY}'
       Content-Type: application/json
       Accept: application/json
     urlParameters:

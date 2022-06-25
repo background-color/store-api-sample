@@ -22,12 +22,9 @@ class OrderController extends Controller
     /**
      * GET 自分の売買履歴を返すAPI
      *
-     * @param Request $request
-     * @return JsonResponse
-     *
      * @authenticated
      * @group Order
-     * @queryParam per_page 1ページの表示件数 Example: 10
+     * @queryParam per_page int 1ページの表示件数 Example: 10
      * @apiResourceModel 200 App\Http\Resources\OrderResource
      */
     public function index(Request $request)
@@ -56,19 +53,31 @@ class OrderController extends Controller
 
     /**
      * POST 商品を購入するAPI
-     * @param Request $request
-     * @return JsonResponse
      *
      * @authenticated
      * @group Order
-     * @bodyParam item_id string  購入する商品のID
+     * @bodyParam item_id int  購入する商品のID
      * @response 200 {
-     *     "message": "Your order has been completed.",
-     *     "orders": {
-     *         "id": 18,
-     *         "accepted_at": "2022-06-23 13:05:06"
+     *    "message": "Your order has been completed.",
+     *     "data": {
+     *         "item": {
+     *             "id": 1,
+     *             "name": "登山靴",
+     *             "point": 100,
+     *             "description": "テキストテキスト",
+     *             "user_id": 1,
+     *             "status": "sold out"
+     *         },
+     *         "seller": {
+     *             "id": 1,
+     *             "name": "山田花子"
+     *         },
+     *         "buyer": {
+     *             "id": 2,
+     *             "name": "鈴木太郎"
+     *         },
+     *         "accepted_at": "2022-06-25 17:22:57"
      *     }
-     * }
      * }
      */
     public function createOrder(Request $request)

@@ -24,8 +24,8 @@ class ItemController extends Controller
      * @return JsonResponse
      *
      * @group Item
-     * @queryParam is_sale 1=販売商品のみ表示 Example: 1
-     * @queryParam per_page 1ページの表示件数 Example: 10
+     * @queryParam is_sale int 1=販売商品のみ表示 Example: 1
+     * @queryParam per_page int 1ページの表示件数 Example: 10
      * @response 200 {
      * "data": [
      *         {
