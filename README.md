@@ -38,7 +38,7 @@ Document : http://localhost:8080/docs/
 
 ### AUTH
 ```bash
-// Register
+# Register
 curl --request POST \
     "http://localhost:8080/api/register" \
     --header "Content-Type: application/json" \
@@ -48,7 +48,7 @@ curl --request POST \
     \"password\": \"password\"
 }"
 
-// Login
+# Login
 curl --request POST \
     "http://localhost:8080/api/login" \
     --header "Content-Type: application/json" \
@@ -57,7 +57,7 @@ curl --request POST \
     \"password\": \"password\"
 }"
 
-// Login response
+# Login response
 {
     "message": "Success",
     "data": {
@@ -69,28 +69,28 @@ curl --request POST \
 
 ### Item
 ```bash
-// Item list
+# Item list
 GET http://localhost:8080/api/items
 
-// Item show
+# Item show
 GET http://localhost:8080/api/items/1
 
-// Item create
+# Item create
 POST http://localhost:8080/api/items
 
-// Item update
+# Item update
 PUT http://localhost:8080/api/items/1
 
-// Item delete
+# Item delete
 DELETE http://localhost:8080/api/items/1
 ```
 
 ### Order
 ```bash
-// Order
+# Order
 POST http://localhost:8080/api/orders
 
-// Order History
+# Order History
 GET http://localhost:8080/api/orders
 
 ```
