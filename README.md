@@ -61,10 +61,17 @@ curl --request POST \
 {
     "message": "Success",
     "data": {
-        "access_token": "xxxxxxxxxxxxxxxxxxxx",
+        "access_token": "{YOUR_AUTH_KEY}",
         "token_type": "Bearer",
     }
 }
+
+# Request sample
+curl --request GET \
+    --get "http://localhost:8080/api/orders?per_page=10" \
+    --header "Authorization: Bearer {YOUR_AUTH_KEY}" \
+    --header "Content-Type: application/json" \
+    --header "Accept: application/json"
 ```
 
 ### Item
@@ -73,16 +80,16 @@ curl --request POST \
 GET http://localhost:8080/api/items
 
 # Item show
-GET http://localhost:8080/api/items/1
+GET http://localhost:8080/api/items/{ID}
 
 # Item create
 POST http://localhost:8080/api/items
 
 # Item update
-PUT http://localhost:8080/api/items/1
+PUT http://localhost:8080/api/items/{ID}
 
 # Item delete
-DELETE http://localhost:8080/api/items/1
+DELETE http://localhost:8080/api/items/{ID}
 ```
 
 ### Order
