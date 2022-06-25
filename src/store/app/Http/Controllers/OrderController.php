@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\Item;
 use App\Models\Order;
 use App\Http\Resources\OrderResource;
+use Exception;
 
 class OrderController extends Controller
 {
@@ -80,42 +81,28 @@ class OrderController extends Controller
             return $this->getErrorResponse($validator->messages(), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        $item = Item::Where('id', $request->item_id)
-                ->where('status', Item::STATUS_SALE)
-                ->first();
-        if (!$item){
-            return $this->getErrorResponse('Not for sale Item.');
-        }
-
-        // 購入者
-        $buyer = User::Where([
-            ['id', '=', $request->user()->id],
-            ['point', '>=', $item->point],
-        ])->first();
-        if (!$buyer) {
-            return $this->getErrorResponse('Item not found.');
-        }
-
-        $order = DB::transaction(function () use($item, $buyer)
-        {
-            $point = $item->point;
-            Item::where('id', $item->id)
-                ->where('status', Item::STATUS_SALE)
-                ->lockForUpdate()
-                ->update(['status' => Item::STATUS_SOLDOUT]);
+        DB::beginTransaction();
+        try {
+            $item = Item::lockForUpdate()->find($request->item_id);
+            if (!$item
+                || $item->status != Item::STATUS_SALE){
+                throw new Exception('Not for sale Item.');
+            }
 
             // 購入者
-            User::where([
-                ['id', $buyer->id],
-                ['point', '>=', $point],
-            ])
-                ->lockForUpdate()
-                ->decrement('point', $point);
+            $buyer = User::lockForUpdate()->find($request->user()->id);
+            if (!$buyer
+                || $buyer->point < $item->point) {
+                throw new Exception('Not enough point.');
+            }
 
             // 出品者
-            User::where('id', $item->user_id)
-                ->lockForUpdate()
-                ->increment('point', $point);
+            $seller = User::lockForUpdate()->find($item->user_id);
+
+            $item->status = Item::STATUS_SOLDOUT;
+            $item->update();
+            $buyer->decrement('point', $item->point);
+            $seller->increment('point', $item->point);
 
             $order = new Order;
             $order->item_id = $item->id;
@@ -123,10 +110,14 @@ class OrderController extends Controller
             $order->seller_id = $item->user_id;
             $order->accepted_at = now();
             $order->save();
+            DB::commit();
 
-            return Order::find_relation()->find($order->id);
-        });
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->getErrorResponse($e->getMessage());
+        }
 
+        $order = Order::find_relation()->find($order->id);
         return $this->getResponse(
             new OrderResource($order),
             'Your order has been completed.'

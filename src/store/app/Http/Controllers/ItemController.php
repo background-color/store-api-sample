@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use App\Traits\ResponseTrait;
 use App\Models\Item;
 use App\Http\Resources\ItemResource;
+use Exception;
 
 class ItemController extends Controller
 {
@@ -82,7 +84,7 @@ class ItemController extends Controller
     public function show($id)
     {
         $item = Item::find($id);
-        if (!$item){
+        if (!$item) {
             return $this->getErrorResponse('Item not found.');
         }
 
@@ -163,37 +165,43 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-          $validator = Validator::make($request->all(), [
-              'name' => 'filled',
-              'point' => 'filled|integer',
-          ]);
+        $validator = Validator::make($request->all(), [
+            'name' => 'filled',
+            'point' => 'filled|integer',
+        ]);
 
-          if ($validator->fails()) {
-              return $this->getErrorResponse(
-                  $validator->messages(),
-                  Response::HTTP_UNPROCESSABLE_ENTITY
-              );
-          }
+        if ($validator->fails()) {
+            return $this->getErrorResponse(
+                $validator->messages(),
+                Response::HTTP_UNPROCESSABLE_ENTITY
+            );
+        }
 
-          if (item::where('id', $id)
-            ->where('user_id', $request->user()->id)
-            ->where('status', Item::STATUS_SALE)
-            ->doesntExist()) {
-                return $this->getErrorResponse('Item not found.');
-          }
+        DB::beginTransaction();
+        try {
+            $item = Item::lockForUpdate()->find($id);
+            if (!$item
+                || $item->user_id != $request->user()->id
+                || $item->status != Item::STATUS_SALE) {
+                throw new Exception('Item not found.');
+            }
 
-          $item = Item::find($id);
-          $item->name = $request->name;
-          $item->point = $request->point;
-          $item->description = $request->description;
-          $item->save();
+            $item->name = $request->name;
+            $item->point = $request->point;
+            $item->description = $request->description;
+            $item->save();
+            DB::commit();
 
-          return $this->getResponse(
-              new ItemResource($item),
-              'Your item has been successfully updated.'
-          );
+        } catch (\Exception $e) {
+            DB::rollback();
+            return $this->getErrorResponse($e->getMessage());
+        }
+
+        return $this->getResponse(
+            new ItemResource($item),
+            'Your item has been successfully updated.'
+        );
     }
-
 
     /**
      * DELETE 商品を削除するAPI
