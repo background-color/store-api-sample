@@ -42,8 +42,3 @@ Route::middleware('auth:sanctum')->group( function () {
 Route::get('/items', [ItemController::class, 'index']);
 // 商品表示（単品）
 Route::get('/items/{id}', [ItemController::class, 'show']);
-
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});

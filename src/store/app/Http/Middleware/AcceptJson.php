@@ -9,7 +9,7 @@ class AcceptJson
 {
     public function handle(Request $request, Closure $next)
     {
-        if(strpos($request->path(),'/api') === 0)
+        if(strpos($request->path(),'/docs') !== 0)
         {
             $request->headers->set('Accept', 'application/json');
         }

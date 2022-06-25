@@ -20,7 +20,7 @@ endpoints:
         name: item_id
         description: 購入する商品のID
         required: false
-        example: quia
+        example: saepe
         type: string
         custom: []
     responses:
@@ -51,7 +51,14 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters: []
-    queryParameters: []
+    queryParameters:
+      per_page:
+        name: per_page
+        description: 1ページの表示件数
+        required: false
+        example: '10'
+        type: string
+        custom: []
     bodyParameters: []
     responses:
       -

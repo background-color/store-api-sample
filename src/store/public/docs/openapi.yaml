@@ -7,9 +7,9 @@ servers:
   -
     url: 'http://localhost:8080'
 paths:
-  /api/user:
-    get:
-      summary: ''
+  /api/register:
+    post:
+      summary: 'POST ユーザー登録'
       description: ''
       parameters:
         -
@@ -27,43 +27,30 @@ paths:
           schema:
             type: string
       responses:
-        401:
+        200:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  message: Unauthenticated.
+                  message: 'User registration completed'
+                  data:
+                    id: 15
+                    name: 山田花子
+                    email: user1@example.com
                 properties:
                   message:
                     type: string
-                    example: Unauthenticated.
+                    example: 'User registration completed'
+                  data:
+                    type: object
+                    example:
+                      id: 15
+                      name: 山田花子
+                      email: user1@example.com
       tags:
-        - Endpoints
-      security: []
-  /api/register:
-    post:
-      summary: ユーザ登録
-      description: ''
-      parameters:
-        -
-          in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        -
-          in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
+        - Auth
       requestBody:
         required: true
         content:
@@ -73,16 +60,16 @@ paths:
               properties:
                 name:
                   type: string
-                  description: ''
-                  example: quis
+                  description: 名前
+                  example: 山田花子
                 email:
                   type: string
-                  description: 'Must be a valid email address.'
-                  example: harold.ratke@example.org
+                  description: メールアドレス
+                  example: user1@example.com
                 password:
                   type: string
-                  description: ''
-                  example: enim
+                  description: パスワード
+                  example: password
               required:
                 - name
                 - email
@@ -90,60 +77,9 @@ paths:
       security: []
   /api/login:
     post:
-      summary: ログイン
+      summary: 'POST ログイン'
       description: ''
       parameters:
-        -
-          in: header
-          name: Content-Type
-          description: ''
-          example: application/json
-          schema:
-            type: string
-        -
-          in: header
-          name: Accept
-          description: ''
-          example: application/json
-          schema:
-            type: string
-      responses: {  }
-      tags:
-        - Endpoints
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                email:
-                  type: string
-                  description: 'Must be a valid email address.'
-                  example: ethelyn11@example.net
-                password:
-                  type: string
-                  description: ''
-                  example: et
-              required:
-                - email
-                - password
-      security: []
-  /api/items:
-    get:
-      summary: 'GET 商品一覧を返すAPI'
-      description: ''
-      parameters:
-        -
-          in: query
-          name: is_sale
-          description: 1=販売商品のみ表示
-          example: '1'
-          required: false
-          schema:
-            type: string
-            description: 1=販売商品のみ表示
-            example: '1'
         -
           in: header
           name: Content-Type
@@ -165,7 +101,75 @@ paths:
             text/plain:
               schema:
                 type: string
-                example: "{\n\"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"登山靴\",\n            \"point\": 100,\n            \"description\": \"テキストテキスト\",\n            \"user_id\": 1,   // 登録者ID\n            \"accepted_at\": null  // 注文日\n        }\n    ]\n}"
+                example: "{\n    \"message\": \"Success\",\n    \"data\": {\n        \"access_token\": \"xxxxxxxxxxxxxxxxxxxx\",\n        \"token_type\": \"Bearer\",\n    }\n}"
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  description: メールアドレス
+                  example: user1@example.com
+                password:
+                  type: string
+                  description: パスワード
+                  example: password
+              required:
+                - email
+                - password
+      security: []
+  /api/items:
+    get:
+      summary: 'GET 商品一覧を返すAPI'
+      description: ''
+      parameters:
+        -
+          in: query
+          name: is_sale
+          description: 1=販売商品のみ表示
+          example: '1'
+          required: false
+          schema:
+            type: string
+            description: 1=販売商品のみ表示
+            example: '1'
+        -
+          in: query
+          name: per_page
+          description: 1ページの表示件数
+          example: '10'
+          required: false
+          schema:
+            type: string
+            description: 1ページの表示件数
+            example: '10'
+        -
+          in: header
+          name: Content-Type
+          description: ''
+          example: application/json
+          schema:
+            type: string
+        -
+          in: header
+          name: Accept
+          description: ''
+          example: application/json
+          schema:
+            type: string
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n\"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"登山靴\",\n            \"point\": 100,\n            \"description\": \"テキストテキスト\",\n            \"user_id\": 1,   // 登録者ID\n            \"status\": \"sale\"  // ステータス\n        }\n    ]\n}"
       tags:
         - Item
       security: []
@@ -194,7 +198,7 @@ paths:
             text/plain:
               schema:
                 type: string
-                example: "{\n    \"message\": \"Your item has been successfully created.\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"登山靴\",\n        \"point\": 1000,\n        \"description\": \"防水加工です\",\n        \"user_id\": 1,  // 登録者ID\n        \"accepted_at\": null  // 受注日\n    }\n}"
+                example: "{\n    \"message\": \"Your item has been successfully created.\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"登山靴\",\n        \"point\": 1000,\n        \"description\": \"防水加工です\",\n        \"user_id\": 1,  // 登録者ID\n        \"status\": \"sale\"  // ステータス\n    }\n}"
       tags:
         - Item
       requestBody:
@@ -245,7 +249,7 @@ paths:
             text/plain:
               schema:
                 type: string
-                example: "{\n\"data\": {\n            \"id\": 1,\n            \"name\": \"登山靴\",\n            \"point\": 100,\n            \"description\": \"テキストテキスト\",\n            \"user_id\": 1,   // 登録者ID\n            \"accepted_at\": null  // 注文日\n        }\n}"
+                example: "{\n\"data\": {\n            \"id\": 1,\n            \"name\": \"登山靴\",\n            \"point\": 100,\n            \"description\": \"テキストテキスト\",\n            \"user_id\": 1,   // 登録者ID\n            \"status\": \"sale\"  // ステータス\n        }\n}"
       tags:
         - Item
       security: []
@@ -274,7 +278,7 @@ paths:
             text/plain:
               schema:
                 type: string
-                example: "{\n    \"message\": \"Your item has been successfully updated.\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"シェラカップ\",\n        \"point\": 800,\n        \"description\": \"ステンレスです\",\n        \"user_id\": 1,  // 登録者ID\n        \"accepted_at\": null  // 受注日\n    }\n}"
+                example: "{\n    \"message\": \"Your item has been successfully updated.\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"シェラカップ\",\n        \"point\": 800,\n        \"description\": \"ステンレスです\",\n        \"user_id\": 1,  // 登録者ID\n        \"status\": \"sale\"  // ステータス\n    }\n}"
       tags:
         - Item
       requestBody:
@@ -324,7 +328,7 @@ paths:
             text/plain:
               schema:
                 type: string
-                example: "{\n    \"message\": \"Your item has been successfully updated.\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"シェラカップ\",\n        \"point\": 800,\n        \"description\": \"ステンレスです\",\n        \"user_id\": 1,  // 登録者ID\n        \"accepted_at\": null  // 受注日\n    }\n}"
+                example: "{\n    \"message\": \"Your item has been successfully deleted.\",\n    \"data\": {\n        \"id\": 1,\n        \"name\": \"シェラカップ\",\n        \"point\": 800,\n        \"description\": \"ステンレスです\",\n        \"user_id\": 1,  // 登録者ID\n        \"status\": \"sale\"  // ステータス\n    }\n}"
       tags:
         - Item
     parameters:
@@ -381,11 +385,21 @@ paths:
                 item_id:
                   type: string
                   description: 購入する商品のID
-                  example: quia
+                  example: saepe
     get:
       summary: 'GET 自分の売買履歴を返すAPI'
       description: ''
       parameters:
+        -
+          in: query
+          name: per_page
+          description: 1ページの表示件数
+          example: '10'
+          required: false
+          schema:
+            type: string
+            description: 1ページの表示件数
+            example: '10'
         -
           in: header
           name: Content-Type
@@ -417,7 +431,7 @@ paths:
         - Order
 tags:
   -
-    name: Endpoints
+    name: Auth
     description: ''
   -
     name: Item

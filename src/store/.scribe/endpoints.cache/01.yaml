@@ -24,6 +24,13 @@ endpoints:
         example: '1'
         type: string
         custom: []
+      per_page:
+        name: per_page
+        description: 1ページの表示件数
+        required: false
+        example: '10'
+        type: string
+        custom: []
     bodyParameters: []
     responses:
       -
@@ -37,7 +44,7 @@ endpoints:
                       "point": 100,
                       "description": "テキストテキスト",
                       "user_id": 1,   // 登録者ID
-                      "accepted_at": null  // 注文日
+                      "status": "sale"  // ステータス
                   }
               ]
           }
@@ -77,7 +84,7 @@ endpoints:
                       "point": 100,
                       "description": "テキストテキスト",
                       "user_id": 1,   // 登録者ID
-                      "accepted_at": null  // 注文日
+                      "status": "sale"  // ステータス
                   }
           }
         headers: []
@@ -131,7 +138,7 @@ endpoints:
                   "point": 1000,
                   "description": "防水加工です",
                   "user_id": 1,  // 登録者ID
-                  "accepted_at": null  // 受注日
+                  "status": "sale"  // ステータス
               }
           }
         headers: []
@@ -192,7 +199,7 @@ endpoints:
                   "point": 800,
                   "description": "ステンレスです",
                   "user_id": 1,  // 登録者ID
-                  "accepted_at": null  // 受注日
+                  "status": "sale"  // ステータス
               }
           }
         headers: []
@@ -225,14 +232,14 @@ endpoints:
         status: 200
         content: |-
           {
-              "message": "Your item has been successfully updated.",
+              "message": "Your item has been successfully deleted.",
               "data": {
                   "id": 1,
                   "name": "シェラカップ",
                   "point": 800,
                   "description": "ステンレスです",
                   "user_id": 1,  // 登録者ID
-                  "accepted_at": null  // 受注日
+                  "status": "sale"  // ステータス
               }
           }
         headers: []

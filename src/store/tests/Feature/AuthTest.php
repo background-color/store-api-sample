@@ -33,16 +33,14 @@ class AuthTest extends TestCase
             'password' => $password
         ]);
         $response->assertOk();
-        $accessToken = $response->decodeResponseJson()['access_token'];
+        $res = $response->decodeResponseJson()['data'];
+        $accessToken = $res['access_token'];
 
         // 認証成功
-        $response = $this->getJson('/api/user', [
+        $response = $this->getJson('/api/orders', [
             'Authorization' => 'Bearer '.$accessToken
         ]);
-        $response->assertOk()->assertJsonFragment([
-            'name' => $name,
-            'email' => $email
-        ]);
+        $response->assertOk();
     }
 
     /**
@@ -50,7 +48,7 @@ class AuthTest extends TestCase
      */
     public function ユーザー認証失敗(): Void
     {
-        $response = $this->getJson('/api/user', [
+        $response = $this->getJson('/api/orders', [
             'Authorization' => 'Bearer none'
         ]);
         $response->assertUnauthorized();

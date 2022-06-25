@@ -70,18 +70,15 @@
                                                 </ul>
                     
                     <ul id="tocify-header-2" class="tocify-header">
-                <li class="tocify-item level-1" data-unique="endpoints">
-                    <a href="#endpoints">Endpoints</a>
+                <li class="tocify-item level-1" data-unique="auth">
+                    <a href="#auth">Auth</a>
                 </li>
-                                    <ul id="tocify-subheader-endpoints" class="tocify-subheader">
-                                                    <li class="tocify-item level-2" data-unique="endpoints-GETapi-user">
-                        <a href="#endpoints-GETapi-user">GET api/user</a>
+                                    <ul id="tocify-subheader-auth" class="tocify-subheader">
+                                                    <li class="tocify-item level-2" data-unique="auth-POSTapi-register">
+                        <a href="#auth-POSTapi-register">POST ユーザー登録</a>
                     </li>
-                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-register">
-                        <a href="#endpoints-POSTapi-register">ユーザ登録</a>
-                    </li>
-                                    <li class="tocify-item level-2" data-unique="endpoints-POSTapi-login">
-                        <a href="#endpoints-POSTapi-login">ログイン</a>
+                                    <li class="tocify-item level-2" data-unique="auth-POSTapi-login">
+                        <a href="#auth-POSTapi-login">POST ログイン</a>
                     </li>
                                                     </ul>
                             </ul>
@@ -130,7 +127,7 @@
                             <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
                     </ul>
         <ul class="toc-footer" id="last-updated">
-        <li>Last updated: June 24 2022</li>
+        <li>Last updated: June 25 2022</li>
     </ul>
 </div>
 
@@ -149,106 +146,11 @@ You can switch the language used with the tabs at the top right (or from the nav
         <h1 id="authenticating-requests">Authenticating requests</h1>
 <p>This API is not authenticated.</p>
 
-        <h1 id="endpoints">Endpoints</h1>
+        <h1 id="auth">Auth</h1>
 
     
 
-            <h2 id="endpoints-GETapi-user">GET api/user</h2>
-
-<p>
-</p>
-
-
-
-<span id="example-requests-GETapi-user">
-<blockquote>Example request:</blockquote>
-
-
-<div class="bash-example">
-    <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8080/api/user" \
-    --header "Content-Type: application/json" \
-    --header "Accept: application/json"</code></pre></div>
-
-
-<div class="javascript-example">
-    <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8080/api/user"
-);
-
-const headers = {
-    "Content-Type": "application/json",
-    "Accept": "application/json",
-};
-
-fetch(url, {
-    method: "GET",
-    headers,
-}).then(response =&gt; response.json());</code></pre></div>
-
-</span>
-
-<span id="example-responses-GETapi-user">
-            <blockquote>
-            <p>Example response (401):</p>
-        </blockquote>
-                <details class="annotation">
-            <summary>
-                <small onclick="textContent = parentElement.parentElement.open ? 'Show headers' : 'Hide headers'">Show headers</small>
-            </summary>
-            <pre><code class="language-http">cache-control: no-cache, private
-content-type: application/json
-access-control-allow-origin: *
- </code></pre>
-        </details>         <pre>
-
-<code class="language-json">{
-    &quot;message&quot;: &quot;Unauthenticated.&quot;
-}</code>
- </pre>
-    </span>
-<span id="execution-results-GETapi-user" hidden>
-    <blockquote>Received response<span
-                id="execution-response-status-GETapi-user"></span>:
-    </blockquote>
-    <pre class="json"><code id="execution-response-content-GETapi-user"></code></pre>
-</span>
-<span id="execution-error-GETapi-user" hidden>
-    <blockquote>Request failed with error:</blockquote>
-    <pre><code id="execution-error-message-GETapi-user"></code></pre>
-</span>
-<form id="form-GETapi-user" data-method="GET"
-      data-path="api/user"
-      data-authed="0"
-      data-hasfiles="0"
-      data-isarraybody="0"
-      data-headers='{"Content-Type":"application\/json","Accept":"application\/json"}'
-      autocomplete="off"
-      onsubmit="event.preventDefault(); executeTryOut('GETapi-user', this);">
-    <h3>
-        Request&nbsp;&nbsp;&nbsp;
-                    <button type="button"
-                    style="background-color: #8fbcd4; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-tryout-GETapi-user"
-                    onclick="tryItOut('GETapi-user');">Try it out ⚡
-            </button>
-            <button type="button"
-                    style="background-color: #c97a7e; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-canceltryout-GETapi-user"
-                    onclick="cancelTryOut('GETapi-user');" hidden>Cancel 🛑
-            </button>&nbsp;&nbsp;
-            <button type="submit"
-                    style="background-color: #6ac174; padding: 5px 10px; border-radius: 5px; border-width: thin;"
-                    id="btn-executetryout-GETapi-user" hidden>Send Request 💥
-            </button>
-            </h3>
-            <p>
-            <small class="badge badge-green">GET</small>
-            <b><code>api/user</code></b>
-        </p>
-                    </form>
-
-            <h2 id="endpoints-POSTapi-register">ユーザ登録</h2>
+            <h2 id="auth-POSTapi-register">POST ユーザー登録</h2>
 
 <p>
 </p>
@@ -265,9 +167,9 @@ access-control-allow-origin: *
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"name\": \"quis\",
-    \"email\": \"harold.ratke@example.org\",
-    \"password\": \"enim\"
+    \"name\": \"山田花子\",
+    \"email\": \"user1@example.com\",
+    \"password\": \"password\"
 }"
 </code></pre></div>
 
@@ -283,9 +185,9 @@ const headers = {
 };
 
 let body = {
-    "name": "quis",
-    "email": "harold.ratke@example.org",
-    "password": "enim"
+    "name": "山田花子",
+    "email": "user1@example.com",
+    "password": "password"
 };
 
 fetch(url, {
@@ -297,7 +199,21 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-register">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;User registration completed&quot;,
+    &quot;data&quot;: {
+        &quot;id&quot;: 15,
+        &quot;name&quot;: &quot;山田花子&quot;,
+        &quot;email&quot;: &quot;user1@example.com&quot;
+    }
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-register" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-register"></span>:
@@ -343,34 +259,34 @@ fetch(url, {
                 <input type="text"
                name="name"
                data-endpoint="POSTapi-register"
-               value="quis"
+               value="山田花子"
                data-component="body" hidden>
     <br>
-
+<p>名前</p>
         </p>
                 <p>
             <b><code>email</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
                 <input type="text"
                name="email"
                data-endpoint="POSTapi-register"
-               value="harold.ratke@example.org"
+               value="user1@example.com"
                data-component="body" hidden>
     <br>
-<p>Must be a valid email address.</p>
+<p>メールアドレス</p>
         </p>
                 <p>
             <b><code>password</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
                 <input type="text"
                name="password"
                data-endpoint="POSTapi-register"
-               value="enim"
+               value="password"
                data-component="body" hidden>
     <br>
-
+<p>パスワード</p>
         </p>
         </form>
 
-            <h2 id="endpoints-POSTapi-login">ログイン</h2>
+            <h2 id="auth-POSTapi-login">POST ログイン</h2>
 
 <p>
 </p>
@@ -387,8 +303,8 @@ fetch(url, {
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"email\": \"ethelyn11@example.net\",
-    \"password\": \"et\"
+    \"email\": \"user1@example.com\",
+    \"password\": \"password\"
 }"
 </code></pre></div>
 
@@ -404,8 +320,8 @@ const headers = {
 };
 
 let body = {
-    "email": "ethelyn11@example.net",
-    "password": "et"
+    "email": "user1@example.com",
+    "password": "password"
 };
 
 fetch(url, {
@@ -417,7 +333,20 @@ fetch(url, {
 </span>
 
 <span id="example-responses-POSTapi-login">
-</span>
+            <blockquote>
+            <p>Example response (200):</p>
+        </blockquote>
+                <pre>
+
+<code class="language-json">{
+    &quot;message&quot;: &quot;Success&quot;,
+    &quot;data&quot;: {
+        &quot;access_token&quot;: &quot;xxxxxxxxxxxxxxxxxxxx&quot;,
+        &quot;token_type&quot;: &quot;Bearer&quot;,
+    }
+}</code>
+ </pre>
+    </span>
 <span id="execution-results-POSTapi-login" hidden>
     <blockquote>Received response<span
                 id="execution-response-status-POSTapi-login"></span>:
@@ -463,20 +392,20 @@ fetch(url, {
                 <input type="text"
                name="email"
                data-endpoint="POSTapi-login"
-               value="ethelyn11@example.net"
+               value="user1@example.com"
                data-component="body" hidden>
     <br>
-<p>Must be a valid email address.</p>
+<p>メールアドレス</p>
         </p>
                 <p>
             <b><code>password</code></b>&nbsp;&nbsp;<small>string</small>  &nbsp;
                 <input type="text"
                name="password"
                data-endpoint="POSTapi-login"
-               value="et"
+               value="password"
                data-component="body" hidden>
     <br>
-
+<p>パスワード</p>
         </p>
         </form>
 
@@ -497,7 +426,7 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8080/api/items?is_sale=1" \
+    --get "http://localhost:8080/api/items?is_sale=1&amp;per_page=10" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -509,6 +438,7 @@ fetch(url, {
 
 const params = {
     "is_sale": "1",
+    "per_page": "10",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -539,7 +469,7 @@ fetch(url, {
             &quot;point&quot;: 100,
             &quot;description&quot;: &quot;テキストテキスト&quot;,
             &quot;user_id&quot;: 1,   // 登録者ID
-            &quot;accepted_at&quot;: null  // 注文日
+            &quot;status&quot;: &quot;sale&quot;  // ステータス
         }
     ]
 }</code>
@@ -595,6 +525,16 @@ fetch(url, {
     <br>
 <p>1=販売商品のみ表示</p>
             </p>
+                    <p>
+                <b><code>per_page</code></b>&nbsp;&nbsp;<small>string</small>     <i>optional</i> &nbsp;
+                <input type="text"
+               name="per_page"
+               data-endpoint="GETapi-items"
+               value="10"
+               data-component="query" hidden>
+    <br>
+<p>1ページの表示件数</p>
+            </p>
                 </form>
 
             <h2 id="item-GETapi-items--id-">GET 指定の商品を返すAPI</h2>
@@ -645,7 +585,7 @@ fetch(url, {
             &quot;point&quot;: 100,
             &quot;description&quot;: &quot;テキストテキスト&quot;,
             &quot;user_id&quot;: 1,   // 登録者ID
-            &quot;accepted_at&quot;: null  // 注文日
+            &quot;status&quot;: &quot;sale&quot;  // ステータス
         }
 }</code>
  </pre>
@@ -765,7 +705,7 @@ fetch(url, {
         &quot;point&quot;: 1000,
         &quot;description&quot;: &quot;防水加工です&quot;,
         &quot;user_id&quot;: 1,  // 登録者ID
-        &quot;accepted_at&quot;: null  // 受注日
+        &quot;status&quot;: &quot;sale&quot;  // ステータス
     }
 }</code>
  </pre>
@@ -913,7 +853,7 @@ fetch(url, {
         &quot;point&quot;: 800,
         &quot;description&quot;: &quot;ステンレスです&quot;,
         &quot;user_id&quot;: 1,  // 登録者ID
-        &quot;accepted_at&quot;: null  // 受注日
+        &quot;status&quot;: &quot;sale&quot;  // ステータス
     }
 }</code>
  </pre>
@@ -1052,14 +992,14 @@ fetch(url, {
                 <pre>
 
 <code class="language-json">{
-    &quot;message&quot;: &quot;Your item has been successfully updated.&quot;,
+    &quot;message&quot;: &quot;Your item has been successfully deleted.&quot;,
     &quot;data&quot;: {
         &quot;id&quot;: 1,
         &quot;name&quot;: &quot;シェラカップ&quot;,
         &quot;point&quot;: 800,
         &quot;description&quot;: &quot;ステンレスです&quot;,
         &quot;user_id&quot;: 1,  // 登録者ID
-        &quot;accepted_at&quot;: null  // 受注日
+        &quot;status&quot;: &quot;sale&quot;  // ステータス
     }
 }</code>
  </pre>
@@ -1146,7 +1086,7 @@ fetch(url, {
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"item_id\": \"quia\"
+    \"item_id\": \"saepe\"
 }"
 </code></pre></div>
 
@@ -1162,7 +1102,7 @@ const headers = {
 };
 
 let body = {
-    "item_id": "quia"
+    "item_id": "saepe"
 };
 
 fetch(url, {
@@ -1242,7 +1182,7 @@ fetch(url, {
                 <input type="text"
                name="item_id"
                data-endpoint="POSTapi-orders"
-               value="quia"
+               value="saepe"
                data-component="body" hidden>
     <br>
 <p>購入する商品のID</p>
@@ -1263,7 +1203,7 @@ fetch(url, {
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8080/api/orders" \
+    --get "http://localhost:8080/api/orders?per_page=10" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
@@ -1272,6 +1212,12 @@ fetch(url, {
     <pre><code class="language-javascript">const url = new URL(
     "http://localhost:8080/api/orders"
 );
+
+const params = {
+    "per_page": "10",
+};
+Object.keys(params)
+    .forEach(key =&gt; url.searchParams.append(key, params[key]));
 
 const headers = {
     "Content-Type": "application/json",
@@ -1351,6 +1297,17 @@ access-control-allow-origin: *
                                                                 data-endpoint="GETapi-orders"
                                                                 data-component="header"></label>
         </p>
+                    <h4 class="fancy-heading-panel"><b>Query Parameters</b></h4>
+                    <p>
+                <b><code>per_page</code></b>&nbsp;&nbsp;<small>string</small>     <i>optional</i> &nbsp;
+                <input type="text"
+               name="per_page"
+               data-endpoint="GETapi-orders"
+               value="10"
+               data-component="query" hidden>
+    <br>
+<p>1ページの表示件数</p>
+            </p>
                 </form>
 
     
