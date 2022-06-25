@@ -1,9 +1,18 @@
 # Point Store
 
-ポイントで個人間売買するショップのREST API
+ポイントで個人間売買する店舗のREST API サンプルです。
 
-## Requirements
-- Docker
+## 機能一覧
+- ユーザー登録（10000ポイント付与）
+- ログイン
+- 商品登録 *
+- 商品編集 *
+- 商品削除 *
+- 商品一覧表示
+- 商品購入 *
+- 売買履歴表示 *
+
+\* = 認証必要
 
 ## 使用技術
 - Laravel
@@ -11,15 +20,21 @@
 - Docker
 - Nginx
 
-## Execution 
+## Setup
 ```bash
 git clone git@github.com:background-color/store-api-sample.git
 cd store-api-sample
+cp src/store/.env.example src/store/.env
+
 docker compose up -d
+
+docker compose exec app composer install
+docker compose exec app php artisan migrate --force
 ```
+開発環境URL: http://localhost:8080/
 
 ## APIs
-Document : http://localhost:8080/docs/index.html
+Document : http://localhost:8080/docs/
 
 ### AUTH
 ```bash
@@ -52,10 +67,39 @@ curl --request POST \
 }
 ```
 
+Item
+```bash
+// Item list
+GET http://localhost:8080/api/items
+
+// Item show
+GET http://localhost:8080/api/items/1
+
+// Item create
+POST http://localhost:8080/api/items
+
+// Item update
+PUT http://localhost:8080/api/items/1
+
+// Item delete
+DELETE http://localhost:8080/api/items/1
+```
+
+Order
+```bash
+// Order
+POST http://localhost:8080/api/orders
+
+// Order History
+GET http://localhost:8080/api/orders
+
+```
+
+
 
 ## Tests
 ```bash
-docker compose exec app /bin/bash -c "cd /app/store && php artisan test"
+docker compose exec app php artisan test
 ```
 
 
