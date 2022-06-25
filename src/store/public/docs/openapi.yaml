@@ -450,7 +450,7 @@ paths:
                 item_id:
                   type: integer
                   description: 購入する商品のID
-                  example: 8
+                  example: 3
     get:
       summary: 'GET 自分の売買履歴を返すAPI'
       description: ''
@@ -512,8 +512,8 @@ paths:
                         name: 佐藤次郎
                       accepted_at: '2022-06-25 17:22:57'
                   links:
-                    first: 'http://localhost/api/orders?page=1'
-                    last: 'http://localhost/api/orders?page=1'
+                    first: 'http://localhost:8080/api/orders?page=1'
+                    last: 'http://localhost:8080/api/orders?page=1'
                     prev: null
                     next: null
                   meta:
@@ -526,14 +526,14 @@ paths:
                         label: '&laquo; Previous'
                         active: false
                       -
-                        url: 'http://localhost/api/orders?page=1'
+                        url: 'http://localhost:8080/api/orders?page=1'
                         label: '1'
                         active: true
                       -
                         url: null
                         label: 'Next &raquo;'
                         active: false
-                    path: 'http://localhost/api/orders'
+                    path: 'http://localhost:8080/api/orders'
                     per_page: 10
                     to: 1
                     total: 1
@@ -562,8 +562,8 @@ paths:
                   links:
                     type: object
                     example:
-                      first: 'http://localhost/api/orders?page=1'
-                      last: 'http://localhost/api/orders?page=1'
+                      first: 'http://localhost:8080/api/orders?page=1'
+                      last: 'http://localhost:8080/api/orders?page=1'
                       prev: null
                       next: null
                   meta:
@@ -578,14 +578,14 @@ paths:
                           label: '&laquo; Previous'
                           active: false
                         -
-                          url: 'http://localhost/api/orders?page=1'
+                          url: 'http://localhost:8080/api/orders?page=1'
                           label: '1'
                           active: true
                         -
                           url: null
                           label: 'Next &raquo;'
                           active: false
-                      path: 'http://localhost/api/orders'
+                      path: 'http://localhost:8080/api/orders'
                       per_page: 10
                       to: 1
                       total: 1

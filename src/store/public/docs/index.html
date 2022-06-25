@@ -26,7 +26,7 @@
             </style>
 
     <script>
-        var baseUrl = "http://localhost";
+        var baseUrl = "http://localhost:8080";
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
@@ -127,7 +127,7 @@
                             <li><a href="http://github.com/knuckleswtf/scribe">Documentation powered by Scribe ✍</a></li>
                     </ul>
         <ul class="toc-footer" id="last-updated">
-        <li>Last updated: June 25 2022</li>
+        <li>Last updated: June 26 2022</li>
     </ul>
 </div>
 
@@ -144,7 +144,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 <pre><code class="language-yaml">http://localhost:8080/</code></pre>
 
         <h1 id="authenticating-requests">Authenticating requests</h1>
-<p>Authenticate requests to this API's endpoints by sending an <strong><code>Authorization</code></strong> header with the value <strong><code>"Bearer {YOUR_AUTH_KEY}"</code></strong>.</p>
+<p>This API is authenticated by sending an <strong><code>Authorization</code></strong> header with the value <strong><code>"Bearer {YOUR_AUTH_KEY}"</code></strong>.</p>
 <p>All authenticated endpoints are marked with a <code>requires authentication</code> badge in the documentation below.</p>
 <p>You can retrieve your token by visiting your dashboard and clicking <b>Generate API token</b>.</p>
 
@@ -1095,7 +1095,7 @@ fetch(url, {
     --header "Content-Type: application/json" \
     --header "Accept: application/json" \
     --data "{
-    \"item_id\": 8
+    \"item_id\": 3
 }"
 </code></pre></div>
 
@@ -1112,7 +1112,7 @@ const headers = {
 };
 
 let body = {
-    "item_id": 8
+    "item_id": 3
 };
 
 fetch(url, {
@@ -1206,7 +1206,7 @@ fetch(url, {
                 <input type="number"
                name="item_id"
                data-endpoint="POSTapi-orders"
-               value="8"
+               value="3"
                data-component="body" hidden>
     <br>
 <p>購入する商品のID</p>
@@ -1297,8 +1297,8 @@ access-control-allow-origin: *
         }
     ],
     &quot;links&quot;: {
-        &quot;first&quot;: &quot;http://localhost/api/orders?page=1&quot;,
-        &quot;last&quot;: &quot;http://localhost/api/orders?page=1&quot;,
+        &quot;first&quot;: &quot;http://localhost:8080/api/orders?page=1&quot;,
+        &quot;last&quot;: &quot;http://localhost:8080/api/orders?page=1&quot;,
         &quot;prev&quot;: null,
         &quot;next&quot;: null
     },
@@ -1313,7 +1313,7 @@ access-control-allow-origin: *
                 &quot;active&quot;: false
             },
             {
-                &quot;url&quot;: &quot;http://localhost/api/orders?page=1&quot;,
+                &quot;url&quot;: &quot;http://localhost:8080/api/orders?page=1&quot;,
                 &quot;label&quot;: &quot;1&quot;,
                 &quot;active&quot;: true
             },
@@ -1323,7 +1323,7 @@ access-control-allow-origin: *
                 &quot;active&quot;: false
             }
         ],
-        &quot;path&quot;: &quot;http://localhost/api/orders&quot;,
+        &quot;path&quot;: &quot;http://localhost:8080/api/orders&quot;,
         &quot;per_page&quot;: 10,
         &quot;to&quot;: 1,
         &quot;total&quot;: 1
