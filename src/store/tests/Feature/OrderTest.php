@@ -37,7 +37,7 @@ class OrderTest extends TestCase
         $this->post('/api/orders/', ['item_id' => $item->id])
             ->assertOk()
             ->assertJson([
-                'orders' => [
+                'data' => [
                     'item_id' => $item->id,
                     'buyer_id' => $this->user->id,
                     'seller_id' => $seller->id,

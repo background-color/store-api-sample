@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Item;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use \Symfony\Component\HttpFoundation\Response;
+use App\Traits\ResponseTrait;
+use App\Models\Item;
 use App\Http\Resources\ItemResource;
 
 class ItemController extends Controller
 {
+    use ResponseTrait;
+
     /**
      * GET 商品一覧を返すAPI
      *
@@ -40,7 +42,8 @@ class ItemController extends Controller
         } else {
             $items = Item::all();
         }
-        return ItemResource::collection($items);
+        //return ItemResource::collection($items);
+        return $this->getResponse(ItemResource::collection($items));
     }
 
     /**
@@ -70,10 +73,10 @@ class ItemController extends Controller
                 ->first();
 
         if (!$item){
-            return response()->json(errmsg('Item not found.'), Response::HTTP_NOT_FOUND);
+            return $this->getErrorResponse('Item not found.');
         }
 
-        return (new ItemResource($item));
+        return $this->getResponse(new ItemResource($item));
     }
 
     /**
@@ -107,7 +110,7 @@ class ItemController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(errmsg($validator->messages()), Response::HTTP_UNPROCESSABLE_ENTITY);
+            return $this->getErrorResponse($validator->messages(), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $item = Item::create([
@@ -117,10 +120,10 @@ class ItemController extends Controller
             'description' => $request->description,
         ]);
 
-        return response()->json([
-                'message' => 'Your item has been successfully created.',
-                'data' => new ItemResource($item),
-            ], Response::HTTP_OK);
+        return $this->getResponse(
+            new ItemResource($item),
+            'Your item has been successfully created.'
+        );
     }
 
 
@@ -156,14 +159,17 @@ class ItemController extends Controller
           ]);
 
           if ($validator->fails()) {
-              return response()->json(errmsg($validator->messages()), Response::HTTP_UNPROCESSABLE_ENTITY);
+              return $this->getErrorResponse(
+                  $validator->messages(),
+                  Response::HTTP_UNPROCESSABLE_ENTITY
+              );
           }
 
           if (item::where('id', $id)
             ->where('user_id', $request->user()->id)
             ->whereNull('accepted_at')
             ->doesntExist()) {
-                return response()->json(errmsg('Item not found.'), Response::HTTP_NOT_FOUND);
+                return $this->getErrorResponse('Item not found.');
           }
 
           $item = Item::find($id);
@@ -172,10 +178,10 @@ class ItemController extends Controller
           $item->description = $request->description;
           $item->save();
 
-          return response()->json([
-                  'message' => 'Your item has been successfully updated.',
-                  'data' => new ItemResource($item),
-              ], Response::HTTP_OK);
+          return $this->getResponse(
+              new ItemResource($item),
+              'Your item has been successfully updated.'
+          );
     }
 
 
@@ -189,7 +195,7 @@ class ItemController extends Controller
      * @group Item
      * @urlParam id int  削除する商品のID Example: 1
      * @response 200 {
-     *     "message": "Your item has been successfully updated.",
+     *     "message": "Your item has been successfully deleted.",
      *     "data": {
      *         "id": 1,
      *         "name": "シェラカップ",
@@ -206,16 +212,16 @@ class ItemController extends Controller
             ->where('user_id', $request->user()->id)
             ->whereNull('accepted_at')
             ->doesntExist()) {
-                return response()->json(errmsg('Item not found.'), Response::HTTP_NOT_FOUND);
+                return $this->getErrorResponse('Item not found.');
         }
 
         $item = Item::find($id);
         $item->delete();
 
-        return response()->json([
-            'message' => 'Your item has been successfully deleted.',
-            'data' => new ItemResource($item),
-        ], Response::HTTP_OK);
+        return $this->getResponse(
+            new ItemResource($item),
+            'Your item has been successfully deleted.'
+        );
     }
     //
 }

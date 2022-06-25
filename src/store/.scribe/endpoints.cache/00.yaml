@@ -47,21 +47,21 @@ endpoints:
         name: name
         description: ''
         required: true
-        example: et
+        example: quis
         type: string
         custom: []
       email:
         name: email
         description: 'Must be a valid email address.'
         required: true
-        example: isaiah.swaniawski@example.net
+        example: harold.ratke@example.org
         type: string
         custom: []
       password:
         name: password
         description: ''
         required: true
-        example: et
+        example: enim
         type: string
         custom: []
     responses: []
@@ -85,7 +85,7 @@ endpoints:
         name: email
         description: 'Must be a valid email address.'
         required: true
-        example: mazie92@example.net
+        example: ethelyn11@example.net
         type: string
         custom: []
       password:

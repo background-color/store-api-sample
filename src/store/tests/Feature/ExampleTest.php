@@ -4,39 +4,18 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-use App\User;
 
-use Illuminate\Testing\Fluent\AssertableJson;
-
-class ExampleFeatureTest extends TestCase
+class ExampleTest extends TestCase
 {
     /**
-     * @test
+     * A basic test example.
+     *
+     * @return void
      */
-
-    use RefreshDatabase;
-    private $accessToken = null;
-
-    protected function setUp(): Void
+    public function test_example()
     {
-        parent::setUp();
+        $response = $this->get('/');
 
-        User::create([
-            "name" => 'sample@example.com',
-            "password" => bcrypt('password'),
-        ]);
-        /*
-        $response = $this->post('/api/register', [
-            'email' => 'sample@example.com',
-            'password' => 'sample123'
-        ]);
-        $response = $this->post('/api/login', [
-            'email' => 'sample@example.com',
-            'password' => 'password'
-        ]);
-        $response->assertOk();
-        $this->accessToken = $response->decodeResponseJson('access_token');
-        */
-        $this->assertTrue(true);
+        $response->assertStatus(200);
     }
 }

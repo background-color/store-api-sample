@@ -22,7 +22,7 @@ endpoints:
         name: item_id
         description: 購入する商品のID
         required: false
-        example: quibusdam
+        example: quia
         type: string
         custom: []
     responses:

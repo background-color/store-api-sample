@@ -74,15 +74,15 @@ paths:
                 name:
                   type: string
                   description: ''
-                  example: et
+                  example: quis
                 email:
                   type: string
                   description: 'Must be a valid email address.'
-                  example: isaiah.swaniawski@example.net
+                  example: harold.ratke@example.org
                 password:
                   type: string
                   description: ''
-                  example: et
+                  example: enim
               required:
                 - name
                 - email
@@ -120,7 +120,7 @@ paths:
                 email:
                   type: string
                   description: 'Must be a valid email address.'
-                  example: mazie92@example.net
+                  example: ethelyn11@example.net
                 password:
                   type: string
                   description: ''
@@ -331,7 +331,7 @@ paths:
       -
         in: path
         name: id
-        description: 'Optional parameter. 購入する商品のID'
+        description: 'Optional parameter. 商品のID'
         required: true
         schema:
           type: integer
@@ -381,7 +381,7 @@ paths:
                 item_id:
                   type: string
                   description: 購入する商品のID
-                  example: quibusdam
+                  example: quia
     get:
       summary: 'GET 自分の売買履歴を返すAPI'
       description: ''

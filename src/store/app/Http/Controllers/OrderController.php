@@ -3,16 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
-use \Symfony\Component\HttpFoundation\Response;
-use App\Http\Resources\OrderResource;
+use App\Traits\ResponseTrait;
 use App\Models\User;
 use App\Models\Item;
 use App\Models\Order;
+use App\Http\Resources\OrderResource;
 
 class OrderController extends Controller
 {
+    use ResponseTrait;
+
     /**
      * GET 自分の売買履歴を返すAPI
      *
@@ -26,7 +30,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $orders = Order::find_relation($request->user()->id);
-        return OrderResource::collection($orders);
+        return $this->getResponse(OrderResource::collection($orders));
     }
 
     /**
@@ -53,12 +57,12 @@ class OrderController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(errmsg($validator->messages()), Response::HTTP_UNPROCESSABLE_ENTITY);
+            return $this->getErrorResponse($validator->messages(), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $item = Item::Where('id', $request->item_id)->whereNull('accepted_at')->first();
         if (!$item){
-            return response()->json(errmsg('Item not found.'), Response::HTTP_NOT_FOUND);
+            return $this->getErrorResponse('Item not found.');
         }
 
         // 購入者
@@ -67,7 +71,7 @@ class OrderController extends Controller
             ['point', '>=', $item->point],
         ])->first();
         if (!$buyer) {
-            return response()->json(errmsg('Not enough point.'), Response::HTTP_NOT_FOUND);
+            return $this->getErrorResponse('Item not found.');
         }
 
         $order = DB::transaction(function () use($item, $buyer)
@@ -103,11 +107,11 @@ class OrderController extends Controller
 
         /////////////////////////
         // TODO 戻り地に item_id などが入ってない。リソースの設定で入れていないから。with関数で取得し直すか？
-        ///////////////////////// 
-        return response()->json([
-            'message' => 'Your order has been completed.',
-            'orders' => new OrderResource($order),
-            ], Response::HTTP_OK);
+        /////////////////////////
+        return $this->getResponse(
+            new OrderResource($order),
+            'Your order has been completed.'
+        );
     }
 
 }

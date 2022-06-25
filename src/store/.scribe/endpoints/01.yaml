@@ -57,7 +57,7 @@ endpoints:
     urlParameters:
       id:
         name: id
-        description: 購入する商品のID
+        description: 商品のID
         required: false
         example: 1
         type: integer
