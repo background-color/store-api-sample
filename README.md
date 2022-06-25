@@ -67,7 +67,7 @@ curl --request POST \
 }
 ```
 
-Item
+### Item
 ```bash
 // Item list
 GET http://localhost:8080/api/items
@@ -85,7 +85,7 @@ PUT http://localhost:8080/api/items/1
 DELETE http://localhost:8080/api/items/1
 ```
 
-Order
+### Order
 ```bash
 // Order
 POST http://localhost:8080/api/orders
