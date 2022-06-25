@@ -16,6 +16,7 @@ use App\Http\Resources\OrderResource;
 class OrderController extends Controller
 {
     use ResponseTrait;
+    protected $default_per_page = 10;
 
     /**
      * GET 自分の売買履歴を返すAPI
@@ -25,12 +26,31 @@ class OrderController extends Controller
      *
      * @authenticated
      * @group Order
+     * @queryParam per_page 1ページの表示件数 Example: 10
      * @apiResourceModel 200 App\Http\Resources\OrderResource
      */
     public function index(Request $request)
     {
-        $orders = Order::find_relation($request->user()->id);
-        return $this->getResponse(OrderResource::collection($orders));
+        $appends = [];
+
+        $user_id = $request->user()->id;
+        $orders = Order::find_relation()
+            ->where(function($query) use($user_id) {
+                $query->orWhere('seller_id', '=', $user_id)
+                    ->orWhere('buyer_id', '=', $user_id);
+            });
+
+        $per_page = $this->default_per_page;
+        if (ctype_digit($request->per_page)) {
+            $per_page = $request->per_page;
+            $appends['per_page'] = $per_page;
+        }
+
+        return OrderResource::collection(
+            $orders
+                ->paginate($per_page)
+                ->appends($appends)
+        );
     }
 
     /**
@@ -102,12 +122,9 @@ class OrderController extends Controller
             $order->accepted_at = now();
             $order->save();
 
-            return $order;
+            return Order::find_relation()->find($order->id);
         });
 
-        /////////////////////////
-        // TODO 戻り地に item_id などが入ってない。リソースの設定で入れていないから。with関数で取得し直すか？
-        /////////////////////////
         return $this->getResponse(
             new OrderResource($order),
             'Your order has been completed.'

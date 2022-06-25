@@ -26,15 +26,12 @@ class Order extends Model
         return $this->belongsTo(User::class, 'buyer_id');
     }
 
-    public static function find_relation($user_id, $order_id = null): \Illuminate\Support\Collection
+    protected static function find_relation()
     {
         return Order::with([
             'item',
             'seller:id,name',
             'buyer:id,name'
-        ])->where(function($query) use($user_id) {
-            $query->orWhere('seller_id', '=', $user_id)
-                ->orWhere('buyer_id', '=', $user_id);
-        })->get(['id','item_id','seller_id','buyer_id','accepted_at']);
+        ]);
     }
 }

@@ -18,11 +18,11 @@ class OrderResource extends JsonResource
         //return parent::toArray($request);
         return [
             'id' => $this->id,
-            'item_id' => $this->item_id,
+            //'item_id' => $this->item_id,
             'item' => new ItemResource($this->whenLoaded('item')),
-            'seller_id' => $this->seller_id,
+            //'seller_id' => $this->seller_id,
             'seller' => new UserResource($this->whenLoaded('seller')),
-            'buyer_id' => $this->buyer_id,
+            //'buyer_id' => $this->buyer_id,
             'buyer' => new UserResource($this->whenLoaded('buyer')),
             'accepted_at' => $this->accepted_at,
         ];

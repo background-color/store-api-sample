@@ -13,6 +13,7 @@ use App\Http\Resources\ItemResource;
 class ItemController extends Controller
 {
     use ResponseTrait;
+    protected $default_per_page = 10;
 
     /**
      * GET 商品一覧を返すAPI
@@ -22,6 +23,7 @@ class ItemController extends Controller
      *
      * @group Item
      * @queryParam is_sale 1=販売商品のみ表示 Example: 1
+     * @queryParam per_page 1ページの表示件数 Example: 10
      * @response 200 {
      * "data": [
      *         {
@@ -37,13 +39,24 @@ class ItemController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->is_sale){
-            $items = Item::whereNull('accepted_at')->get();
-        } else {
-            $items = Item::all();
+        $appends = [];
+
+        $items = new Item();
+        if ($request->is_sale) {
+            $items = $items->whereNull('accepted_at');
+            $appends['is_sale'] = '1';
         }
-        //return ItemResource::collection($items);
-        return $this->getResponse(ItemResource::collection($items));
+
+        $per_page = $this->default_per_page;
+        if (ctype_digit($request->per_page)) {
+            $per_page = $request->per_page;
+            $appends['per_page'] = $per_page;
+        }
+
+        $items = $items->paginate($per_page);
+        $items->appends($appends);
+
+        return ItemResource::collection($items);
     }
 
     /**
@@ -68,15 +81,12 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        $item = Item::where('id', $id)
-                ->whereNull('accepted_at')
-                ->first();
-
+        $item = Item::find($id);
         if (!$item){
             return $this->getErrorResponse('Item not found.');
         }
 
-        return $this->getResponse(new ItemResource($item));
+        return new ItemResource($item);
     }
 
     /**

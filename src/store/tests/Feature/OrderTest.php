@@ -38,9 +38,15 @@ class OrderTest extends TestCase
             ->assertOk()
             ->assertJson([
                 'data' => [
-                    'item_id' => $item->id,
-                    'buyer_id' => $this->user->id,
-                    'seller_id' => $seller->id,
+                    'item' => [
+                        'id' => $item->id,
+                    ],
+                    'buyer' => [
+                        'id' => $this->user->id,
+                    ],
+                    'seller' => [
+                        'id' => $seller->id,
+                    ],
                 ],
             ]);
 
@@ -128,15 +134,27 @@ class OrderTest extends TestCase
             ->assertJson([
                 'data' => [
                     [
-                        'item_id' => $item1->id,
-                        'buyer_id' => $this->user->id,
-                        'seller_id' => $seller1->id,
+                        'item' => [
+                            'id' => $item1->id,
+                        ],
+                        'buyer' => [
+                            'id' => $this->user->id,
+                        ],
+                        'seller' => [
+                            'id' => $seller1->id,
+                        ],
                     ],
                     [
-                        'item_id' => $item2->id,
-                        'buyer_id' => $this->user->id,
-                        'seller_id' => $seller2->id,
-                    ]
+                        'item' => [
+                            'id' => $item2->id,
+                        ],
+                        'buyer' => [
+                            'id' => $this->user->id,
+                        ],
+                        'seller' => [
+                            'id' => $seller2->id,
+                        ],
+                    ],
                 ]
             ]);
 
@@ -148,9 +166,15 @@ class OrderTest extends TestCase
             ->assertJson([
                 'data' => [
                     [
-                        'item_id' => $item1->id,
-                        'buyer_id' => $this->user->id,
-                        'seller_id' => $seller1->id,
+                        'item' => [
+                            'id' => $item1->id,
+                        ],
+                        'buyer' => [
+                            'id' => $this->user->id,
+                        ],
+                        'seller' => [
+                            'id' => $seller1->id,
+                        ],
                     ],
                 ]
             ]);

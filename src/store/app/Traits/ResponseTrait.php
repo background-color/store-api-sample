@@ -13,7 +13,7 @@ trait ResponseTrait
             'message' => $message,
             'data' => $data,
         ];
-        return response()->json($data, 200);
+        return response()->json($response, 200);
     }
 
     public function getErrorResponse($message, $status = 404)
