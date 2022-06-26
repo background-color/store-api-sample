@@ -203,8 +203,7 @@ class ItemController extends Controller
 
         } catch (\Exception $e) {
             DB::rollback();
-            $status_code = $e->getCode() ? $e->getCode() : Response::HTTP_NOT_FOUND;
-            return $this->getErrorResponse($e->getMessage(), $status_code);
+            return $this->getErrorResponse($e->getMessage(), $e->getCode());
         }
 
         return $this->getResponse(

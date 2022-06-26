@@ -84,7 +84,7 @@ class OrderTest extends TestCase
 
         $item = Item::first();
         $this->post('/api/orders/', ['item_id' => $item->id])
-            ->assertStatus(404);
+            ->assertStatus(400);
     }
 
     /**
@@ -102,7 +102,7 @@ class OrderTest extends TestCase
 
         $item = Item::first();
         $this->post('/api/orders/', ['item_id' => $item->id])
-            ->assertStatus(404);
+            ->assertStatus(400);
     }
 
     /**

@@ -95,14 +95,20 @@ class OrderController extends Controller
             $item = Item::lockForUpdate()->find($request->item_id);
             if (!$item
                 || $item->status != Item::STATUS_SALE){
-                throw new Exception('Not for sale Item.');
+                throw new Exception(
+                    'Not for sale Item.',
+                    Response::HTTP_BAD_REQUEST
+                );
             }
 
             // 購入者
             $buyer = User::lockForUpdate()->find($request->user()->id);
             if (!$buyer
                 || $buyer->point < $item->point) {
-                throw new Exception('Not enough point.');
+                throw new Exception(
+                    'Not enough point.',
+                    Response::HTTP_BAD_REQUEST
+                );
             }
 
             // 出品者
@@ -123,7 +129,7 @@ class OrderController extends Controller
 
         } catch (\Exception $e) {
             DB::rollback();
-            return $this->getErrorResponse($e->getMessage());
+            return $this->getErrorResponse($e->getMessage(), $e->getCode());
         }
 
         $order = Order::find_relation()->find($order->id);
