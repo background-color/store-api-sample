@@ -120,11 +120,11 @@ class ItemTest extends TestCase
         // 更新不可
         $item = Item::first();
         $response = $this->put('/api/items/'.$item->id, $this->item3);
-        $response->assertStatus(404);
+        $response->assertStatus(400);
 
         // 更新不可
         $response = $this->delete('/api/items/'.$item->id);
-        $response->assertStatus(404);
+        $response->assertStatus(400);
     }
 
     /**
@@ -142,10 +142,10 @@ class ItemTest extends TestCase
         // 変更不可
         $item = Item::first();
         $response = $this->put('/api/items/'.$item->id, $this->item3);
-        $response->assertStatus(404);
+        $response->assertStatus(400);
 
         // 変更不可
         $response = $this->delete('/api/items/'.$item->id);
-        $response->assertStatus(404);
+        $response->assertStatus(400);
     }
 }

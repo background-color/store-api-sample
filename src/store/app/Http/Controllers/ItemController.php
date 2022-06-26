@@ -183,18 +183,28 @@ class ItemController extends Controller
             if (!$item
                 || $item->user_id != $request->user()->id
                 || $item->status != Item::STATUS_SALE) {
-                throw new Exception('Item not found.');
+                throw new Exception(
+                    'Item could not be changed.',
+                    Response::HTTP_BAD_REQUEST
+                );
             }
 
-            $item->name = $request->name;
-            $item->point = $request->point;
-            $item->description = $request->description;
+            if ($request->name) {
+                $item->name = $request->name;
+            }
+            if ($request->point) {
+                $item->point = $request->point;
+            }
+            if($request->description) {
+                $item->description = $request->description;
+            }
             $item->save();
             DB::commit();
 
         } catch (\Exception $e) {
             DB::rollback();
-            return $this->getErrorResponse($e->getMessage());
+            $status_code = $e->getCode() ? $e->getCode() : Response::HTTP_NOT_FOUND;
+            return $this->getErrorResponse($e->getMessage(), $status_code);
         }
 
         return $this->getResponse(
@@ -230,7 +240,10 @@ class ItemController extends Controller
             ->where('user_id', $request->user()->id)
             ->where('status', Item::STATUS_SALE)
             ->doesntExist()) {
-                return $this->getErrorResponse('Item not found.');
+                return $this->getErrorResponse(
+                    'Item could not be deleted.',
+                    Response::HTTP_BAD_REQUEST
+                );
         }
 
         $item = Item::find($id);
