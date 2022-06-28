@@ -80,6 +80,16 @@ class ItemTest extends TestCase
         $response = $this->get('/api/items/'.$item->id);
         $response->assertOk()
                 ->assertJsonFragment($this->item3);
+
+        // 一部更新
+        $item = Item::first();
+        $response = $this->put('/api/items/'.$item->id, ['name' => 'upd']);
+        $response->assertOk()
+            ->assertJsonFragment([
+                'name' => 'upd',
+                'point' => $item->point,
+                'description' => $item->description,
+            ]);
     }
 
     /**
