@@ -31,7 +31,7 @@ docker compose up -d
 docker compose exec app composer install
 docker compose exec app php artisan migrate --force
 ```
-開発環境URL: http://localhost:8080/
+BaseURL: http://localhost:8080/
 
 ## APIs
 Document : http://localhost:8080/docs/
@@ -111,3 +111,8 @@ docker compose exec app php artisan test
 
 
 
+
+## Close
+```bash
+docker compose down -v
+```
