@@ -15,7 +15,7 @@
 \* = 認証必要
 
 ## 使用技術
-- Laravel
+- PHP(Laravel)
 - Sanctum
 - Docker
 - Nginx
