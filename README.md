@@ -16,7 +16,7 @@
 
 ## 使用技術
 - PHP(Laravel)
-- Mysql
+- MySQL
 - Nginx
 - Sanctum
 - Docker
