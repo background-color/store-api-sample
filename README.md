@@ -16,9 +16,10 @@
 
 ## 使用技術
 - PHP(Laravel)
+- Mysql
+- Nginx
 - Sanctum
 - Docker
-- Nginx
 
 ## Setup
 ```bash
